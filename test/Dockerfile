@@ -1,5 +1,7 @@
 FROM node:24-alpine
 
+ENV REDIS_URL=redis://redis:6379
+
 RUN mkdir -p /src
 WORKDIR /src
 
@@ -11,4 +13,5 @@ COPY . .
 
 RUN yarn lint
 RUN yarn build
-RUN yarn test
+
+CMD ["yarn", "test"]
