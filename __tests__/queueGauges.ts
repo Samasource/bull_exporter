@@ -60,7 +60,8 @@ it('should list 1 completed job with delay', async () => {
   // TODO: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/31567
   // TODO: file bug with bull? finishedOn and processedOn are not set when we call finish
   const doneJob: any = await queue.getJob(job.id);
-  // lie about job duration
+  // lie about job duration and waiting time
+  doneJob.timestamp = doneJob.processedOn - 500;
   doneJob.finishedOn = doneJob.processedOn + 1000;
 
   await getStats(prefix, name, queue, guages);
