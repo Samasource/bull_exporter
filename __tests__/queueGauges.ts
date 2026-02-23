@@ -8,7 +8,7 @@ import { getCurrentTestHash } from './setup.util';
 let testData: TestData;
 
 beforeEach(async () => {
-  jest.resetModuleRegistry();
+  jest.resetModules();
   const { makeQueue } = await import('./create.util');
   const hash = getCurrentTestHash();
   testData = makeQueue(hash);
@@ -135,8 +135,8 @@ it('should list 1 active job', async () => {
     registry,
   } = testData;
 
-  let jobStartedResolve!: () => void;
-  let jobDoneResolve!: () => void;
+  let jobStartedResolve!: (value?: unknown) => void;
+  let jobDoneResolve!: (value?: unknown) => void;
   const jobStartedPromise = new Promise(resolve => jobStartedResolve = resolve);
   const jobDonePromise = new Promise(resolve => jobDoneResolve = resolve);
 

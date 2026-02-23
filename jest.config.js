@@ -1,6 +1,4 @@
 module.exports = {
-	preset: "ts-jest",
-	// preset: 'ts-jest/presets/js-with-babel',
 	testEnvironment: "node",
 	collectCoverage: false,
 	testPathIgnorePatterns: [
@@ -10,9 +8,7 @@ module.exports = {
 		"[.]d[.][jt]s$",
 	],
 	setupFilesAfterEnv: ["<rootDir>/__tests__/setup.util.ts"],
-	globals: {
-		"ts-jest": {
-			tsConfig: "__tests__/tsconfig.json",
-		},
+	transform: {
+		"^.+\\.tsx?$": ["ts-jest", { tsconfig: "__tests__/tsconfig.json" }],
 	},
 };

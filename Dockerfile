@@ -24,4 +24,4 @@ COPY /setup/docker/main.sh /src/
 COPY --chown=nobody:nogroup --from=build-env /src/node_modules /src/node_modules
 COPY --chown=nobody:nogroup --from=build-env /src/dist /src/dist
 
-CMD /src/main.sh
+CMD ["/src/main.sh"]
