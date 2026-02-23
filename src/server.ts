@@ -161,7 +161,7 @@ export async function startServer(
   const app = await makeServer(opts);
 
   let server: http.Server;
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server = app.listen(opts.port, opts.bindAddress, (err: any) => {
       if (err) {
         reject(err);
