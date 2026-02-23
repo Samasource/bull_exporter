@@ -10,7 +10,7 @@ export interface Options {
   port: number;
   bindAddress: string;
   autoDiscover: boolean;
-  _: string[];
+  _: (string | number)[];
 }
 
 export function getOptionsFromArgs(...args: string[]): Options {
@@ -54,5 +54,6 @@ export function getOptionsFromArgs(...args: string[]): Options {
         description: 'Address to listen on',
         default: '0.0.0.0',
       },
-    }).parse(args);
+    })
+    .parse(args);
 }

@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "config:base",
-    "group:allNonMajor"
-  ],
+  "extends": ["config:base", "group:allNonMajor"],
   "docker": {
     "enabled": false
   },
@@ -11,15 +8,12 @@
   "prHourlyLimit": 6,
   "rebaseStalePrs": true,
   "reviewers": ["GabrielCastro"],
-  "schedule": [
-    "after 9am and before 3pm",
-    "every weekday"
-  ],
-  "packageRules": [{
-    "groupName": "jest monorepo",
-    "packageNames": ["@types/jest", "@types/expect", "ts-jest"],
-    "sourceUrlPrefixes": [
-      "https://github.com/facebook/jest"
-    ]
-  }]
+  "schedule": ["after 9am and before 3pm", "every weekday"],
+  "packageRules": [
+    {
+      "groupName": "jest monorepo",
+      "packageNames": ["@types/jest", "@types/expect", "ts-jest"],
+      "sourceUrlPrefixes": ["https://github.com/facebook/jest"]
+    }
+  ]
 }

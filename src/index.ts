@@ -9,7 +9,7 @@ import { startServer } from './server';
 // tslint:disable:no-console
 
 export async function printOnce(opts: Options): Promise<void> {
-  const collector = new MetricCollector(opts._, {
+  const collector = new MetricCollector(opts._.map(String), {
     logger,
     metricPrefix: opts.metricPrefix,
     redis: opts.url,
@@ -44,17 +44,17 @@ if (require.main === module) {
 
   let exitCode = 0;
   main(...args)
-    .catch(() => process.exitCode = exitCode = 1)
-    .then(() => {
-      setTimeout(
-        () => {
-          logger.error('No clean exit after 5 seconds, force exit');
-          process.exit(exitCode);
-        },
-        5000,
-      ).unref();
+    .catch((err) => {
+      logger.error({ err }, 'Unable to start');
+      process.exitCode = exitCode = 1;
     })
-    .catch(err => {
+    .then(() => {
+      setTimeout(() => {
+        logger.error('No clean exit after 5 seconds, force exit');
+        process.exit(exitCode);
+      }, 5000).unref();
+    })
+    .catch((err) => {
       console.error('Double error');
       console.error(err.stack);
       process.exit(-1);

@@ -1,4 +1,4 @@
-FROM node:10-alpine as build-env
+FROM node:24-alpine as build-env
 
 RUN mkdir -p /src
 WORKDIR /src
@@ -11,7 +11,7 @@ COPY . .
 RUN node_modules/.bin/tsc -p .
 RUN yarn install --pure-lockfile --production
 
-FROM node:10-alpine
+FROM node:24-alpine
 RUN apk --no-cache add tini bash
 ENTRYPOINT ["/sbin/tini", "--"]
 
@@ -24,4 +24,4 @@ COPY /setup/docker/main.sh /src/
 COPY --chown=nobody:nogroup --from=build-env /src/node_modules /src/node_modules
 COPY --chown=nobody:nogroup --from=build-env /src/dist /src/dist
 
-CMD /src/main.sh
+CMD ["/src/main.sh"]

@@ -8,7 +8,7 @@ import { getCurrentTestHash } from './setup.util';
 let testData: TestData;
 
 beforeEach(async () => {
-  jest.resetModuleRegistry();
+  jest.resetModules();
   const { makeQueue } = await import('./create.util');
   const hash = getCurrentTestHash();
   testData = makeQueue(hash);
@@ -24,14 +24,7 @@ afterEach(async () => {
 });
 
 it('should list 1 queued job', async () => {
-
-  const {
-    name,
-    queue,
-    prefix,
-    guages,
-    registry,
-  } = testData;
+  const { name, queue, prefix, guages, registry } = testData;
 
   await queue.add({ a: 1 });
 
@@ -41,13 +34,7 @@ it('should list 1 queued job', async () => {
 });
 
 it('should list 1 completed job', async () => {
-  const {
-    name,
-    queue,
-    prefix,
-    guages,
-    registry,
-  } = testData;
+  const { name, queue, prefix, guages, registry } = testData;
 
   queue.process(async (jobInner: bull.Job<unknown>) => {
     expect(jobInner).toMatchObject({ data: { a: 1 } });
@@ -62,13 +49,7 @@ it('should list 1 completed job', async () => {
 });
 
 it('should list 1 completed job with delay', async () => {
-  const {
-    name,
-    queue,
-    prefix,
-    guages,
-    registry,
-  } = testData;
+  const { name, queue, prefix, guages, registry } = testData;
 
   queue.process(async (jobInner: bull.Job<unknown>) => {
     expect(jobInner).toMatchObject({ data: { a: 1 } });
@@ -89,13 +70,7 @@ it('should list 1 completed job with delay', async () => {
 });
 
 it('should list 1 failed job', async () => {
-  const {
-    name,
-    queue,
-    prefix,
-    guages,
-    registry,
-  } = testData;
+  const { name, queue, prefix, guages, registry } = testData;
 
   queue.process(async (jobInner: bull.Job<unknown>) => {
     expect(jobInner).toMatchObject({ data: { a: 1 } });
@@ -111,13 +86,7 @@ it('should list 1 failed job', async () => {
 });
 
 it('should list 1 delayed job', async () => {
-  const {
-    name,
-    queue,
-    prefix,
-    guages,
-    registry,
-  } = testData;
+  const { name, queue, prefix, guages, registry } = testData;
 
   await queue.add({ a: 1 }, { delay: 100_000 });
 
@@ -127,18 +96,14 @@ it('should list 1 delayed job', async () => {
 });
 
 it('should list 1 active job', async () => {
-  const {
-    name,
-    queue,
-    prefix,
-    guages,
-    registry,
-  } = testData;
+  const { name, queue, prefix, guages, registry } = testData;
 
-  let jobStartedResolve!: () => void;
-  let jobDoneResolve!: () => void;
-  const jobStartedPromise = new Promise(resolve => jobStartedResolve = resolve);
-  const jobDonePromise = new Promise(resolve => jobDoneResolve = resolve);
+  let jobStartedResolve!: (value?: unknown) => void;
+  let jobDoneResolve!: (value?: unknown) => void;
+  const jobStartedPromise = new Promise(
+    (resolve) => (jobStartedResolve = resolve),
+  );
+  const jobDonePromise = new Promise((resolve) => (jobDoneResolve = resolve));
 
   queue.process(async () => {
     jobStartedResolve();

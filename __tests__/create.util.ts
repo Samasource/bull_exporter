@@ -11,10 +11,13 @@ export interface TestData {
   registry: Registry;
 }
 
-export function makeQueue(name: string = 'TestQueue', prefix: string = 'test-queue'): TestData {
-
+export function makeQueue(
+  name: string = 'TestQueue',
+  prefix: string = 'test-queue',
+): TestData {
   const registry = new Registry();
-  const queue = new Bull(name, { prefix });
+  const redisUrl = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
+  const queue = new Bull(name, redisUrl, { prefix });
 
   return {
     name,
