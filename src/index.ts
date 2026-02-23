@@ -9,7 +9,7 @@ import { startServer } from './server';
 // tslint:disable:no-console
 
 export async function printOnce(opts: Options): Promise<void> {
-  const collector = new MetricCollector(opts._, {
+  const collector = new MetricCollector(opts._.map(String), {
     logger,
     metricPrefix: opts.metricPrefix,
     redis: opts.url,

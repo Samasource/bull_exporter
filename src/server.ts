@@ -71,7 +71,7 @@ export async function makeServer(opts: Options): Promise<express.Application> {
     },
   );
 
-  const collector = new MetricCollector(opts._, {
+  const collector = new MetricCollector(opts._.map(String), {
     logger,
     metricPrefix: opts.metricPrefix,
     redis: opts.url,

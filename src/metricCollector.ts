@@ -1,7 +1,7 @@
 import bull from 'bull';
 import * as Logger from 'bunyan';
 import { EventEmitter } from 'events';
-import IoRedis from 'ioredis';
+import IoRedis, { RedisOptions } from 'ioredis';
 import { register as globalRegister, Registry } from 'prom-client';
 
 import { logger as globalLogger } from './logger';
@@ -31,7 +31,7 @@ export interface QueueData<T = unknown> {
 export class MetricCollector {
   private readonly logger: Logger;
 
-  private readonly defaultRedisClient: IoRedis.Redis;
+  private readonly defaultRedisClient: IoRedis;
   private readonly redisUri: string;
   private readonly bullOpts: Omit<bull.QueueOptions, 'redis'>;
   private readonly queuesByName: Map<string, QueueData<unknown>> = new Map();
@@ -61,12 +61,12 @@ export class MetricCollector {
 
   private createClient(
     _type: 'client' | 'subscriber' | 'bclient',
-    redisOpts?: IoRedis.RedisOptions,
-  ): IoRedis.Redis {
+    redisOpts?: RedisOptions,
+  ): IoRedis {
     if (_type === 'client') {
       return this.defaultRedisClient!;
     }
-    return new IoRedis(this.redisUri, redisOpts);
+    return redisOpts ? new IoRedis(this.redisUri, redisOpts) : new IoRedis(this.redisUri);
   }
 
   private addToQueueSet(names: string[]): void {

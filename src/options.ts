@@ -10,7 +10,7 @@ export interface Options {
   port: number;
   bindAddress: string;
   autoDiscover: boolean;
-  _: string[];
+  _: (string | number)[];
 }
 
 export function getOptionsFromArgs(...args: string[]): Options {
