@@ -5,7 +5,8 @@ export function getCurrentTest(): string {
 }
 
 export function getCurrentTestHash(): string {
-  return crypto.createHash('md5')
+  return crypto
+    .createHash('md5')
     .update(getCurrentTest())
     .digest('hex')
     .substring(0, 16);

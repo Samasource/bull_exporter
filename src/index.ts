@@ -44,20 +44,17 @@ if (require.main === module) {
 
   let exitCode = 0;
   main(...args)
-    .catch(err => {
+    .catch((err) => {
       logger.error({ err }, 'Unable to start');
       process.exitCode = exitCode = 1;
     })
     .then(() => {
-      setTimeout(
-        () => {
-          logger.error('No clean exit after 5 seconds, force exit');
-          process.exit(exitCode);
-        },
-        5000,
-      ).unref();
+      setTimeout(() => {
+        logger.error('No clean exit after 5 seconds, force exit');
+        process.exit(exitCode);
+      }, 5000).unref();
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('Double error');
       console.error(err.stack);
       process.exit(-1);

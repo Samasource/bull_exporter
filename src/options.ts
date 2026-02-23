@@ -54,5 +54,6 @@ export function getOptionsFromArgs(...args: string[]): Options {
         description: 'Address to listen on',
         default: '0.0.0.0',
       },
-    }).parse(args);
+    })
+    .parse(args);
 }

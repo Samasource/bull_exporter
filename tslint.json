@@ -1,20 +1,19 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-config-airbnb"
-  ],
+  "extends": ["tslint:recommended", "tslint-config-airbnb"],
   "linterOptions": {
     "format": "stylish",
-    "exclude": [
-      "**/*.json",
-      "**/*.js"
-    ]
+    "exclude": ["**/*.json", "**/*.js"]
   },
   "rules": {
-    "ter-arrow-parens": [true, "as-needed"],
-    "ter-indent": [true, 2, {
-      "SwitchCase": 1
-    }],
+    "ter-arrow-parens": [true, "always"],
+    "ter-indent": [
+      true,
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "align": false,
     "import-name": false,
     "curly": [true],
     "max-line-length": [true, 255],
@@ -28,8 +27,19 @@
       }
     ],
     "quotemark": [true, "single", "avoid-escape"],
-    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-    "typedef": [true, "call-signature", "parameter", "property-declaration", "member-variable-declaration"],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore"
+    ],
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration"
+    ],
     "await-promise": [true, "RequestPromise", "Bluebird"],
     "no-floating-promises": [true, "RequestPromise", "Bluebird"],
     "object-literal-sort-keys": false,
