@@ -28,7 +28,6 @@
     "typescript": "5.7.3"
   },
   "dependencies": {
-    "@types/bull": "^3.5.4",
     "@types/bunyan": "^1.8.5",
     "@types/uuid": "^8.0.0",
     "@types/yargs": "^15.0.0",
