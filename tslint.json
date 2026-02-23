@@ -13,7 +13,9 @@
         "SwitchCase": 1
       }
     ],
-    "align": false,
+    "align": {
+      "options": ["parameters", "statements"]
+    },
     "import-name": false,
     "curly": [true],
     "max-line-length": [true, 255],
