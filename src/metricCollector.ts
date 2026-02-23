@@ -66,7 +66,12 @@ export class MetricCollector {
     if (_type === 'client') {
       return this.defaultRedisClient!;
     }
-    return redisOpts ? new IoRedis(this.redisUri, redisOpts) : new IoRedis(this.redisUri);
+    const opts: RedisOptions = {
+      ...redisOpts,
+      enableReadyCheck: false,
+      maxRetriesPerRequest: null,
+    };
+    return new IoRedis(this.redisUri, opts);
   }
 
   private addToQueueSet(names: string[]): void {
