@@ -9,6 +9,7 @@ export interface QueueGauges {
   failed: Gauge<LabelsT>;
   waiting: Gauge<LabelsT>;
   completeSummary: Summary<LabelsT>;
+  waitingSummary: Summary<LabelsT>;
 }
 
 export function makeGuages(
@@ -26,6 +27,14 @@ export function makeGuages(
       registers,
       name: `${statPrefix}complete_duration`,
       help: 'Time to complete jobs',
+      labelNames: ['queue', 'prefix'],
+      maxAgeSeconds: 300,
+      ageBuckets: 13,
+    }),
+    waitingSummary: new Summary({
+      registers,
+      name: `${statPrefix}waiting_duration`,
+      help: 'Time jobs spend waiting in the queue before being processed',
       labelNames: ['queue', 'prefix'],
       maxAgeSeconds: 300,
       ageBuckets: 13,
@@ -67,7 +76,9 @@ export async function getJobCompleteStats(
     return;
   }
   const duration = job.finishedOn - job.processedOn!;
+  const waitingDuration = job.processedOn! - job.timestamp!;
   gauges.completeSummary.observe({ prefix, queue: name }, duration);
+  gauges.waitingSummary.observe({ prefix, queue: name }, waitingDuration);
 }
 
 export async function getStats(
